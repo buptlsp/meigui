@@ -134,6 +134,7 @@ class meigui
                 $url = htmlspecialchars_decode($url);
                 $conn = new HttpConn($url, '', array());
                 $str = $conn->connect();
+                print date('Y-m-d H:i:s')."\t 收花\n";
                 sleep(1);
             }
             $this->flushPage();
@@ -145,8 +146,10 @@ class meigui
                 $url = htmlspecialchars_decode($url);
                 $conn = new HttpConn($url, '', array());
                 $str = $conn->connect();
+                print date('Y-m-d H:i:s')."\t 铲花\n";
                 sleep(1);
             }
+            $this->flushPage();
         }
         //除草
         $arr = $this->getUrl['action'];
@@ -155,6 +158,7 @@ class meigui
                 $url = htmlspecialchars_decode($url);
                 $conn = new HttpConn($url, '', array());
                 $str = $conn->connect();
+                print date('Y-m-d H:i:s')."\t 除草、杀虫\n";
                 sleep(1);
             }
             $this->flushPage();
@@ -173,7 +177,8 @@ class meigui
             'uin' => $this->uin,
             'sid' => $this->sid,
         );
-        $conn = new HttpConn(self::MEIGUI_URL, self::$actionUrl['buy'], $data);
+        $conn = new HttpConn(self::MEIGUI_URL, self::$actionUrl['buy'], $data); 
+        print date('Y-m-d H:i:s')."\t 买花\ttype:$type, 数量:$count\n";
         $str = $conn->connect();
     }
     //种花
@@ -194,10 +199,10 @@ class meigui
                 //如果有水生花需要种，去买水生花
                 if(in_array($soilno, array(7,8,18))){
                     $type = self::$flowerArr['萍逢草'];
-                   // $this->buyFlower($type);
+                    $this->buyFlower($type);
                 } else {
                     $type = self::$flowerArr['梅花'];
-                   // $this->buyFlower($type);
+                    $this->buyFlower($type);
                 }
                 $data = array(
                     'soilno' => $soilno,
@@ -207,6 +212,7 @@ class meigui
                 );
                 
                 $conn = new HttpConn(self::MEIGUI_URL, self::$actionUrl['sow'], $data);
+                print date('Y-m-d H:i:s')."\t 种花\tsoilno:$soilno\n";
                 $str = $conn->connect();
                 sleep(1);
             }
@@ -214,8 +220,7 @@ class meigui
         }
     }
 }
-$sleep_time = rand(1,600);
-sleep($sleep_time);
+while(true) {
 $uin = '';
 $sid = '';
 $meigui = new meigui();
@@ -225,3 +230,6 @@ $meigui->isLoad = true;
 $meigui->flushPage();
 $meigui->processUrl();
 $meigui->sowFlower();
+$sleep_time = 3600*rand(4,5) + 100*rand(1,10);
+sleep($sleep_time);
+}
