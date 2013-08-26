@@ -27,7 +27,7 @@ class HttpConn {
         }else {
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $curl_data);
-        }
+		}
         if($this->useCookie){
             // 设置从$cookie所指文件中读取cookie信息以发送
             curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie);
