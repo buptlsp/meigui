@@ -255,9 +255,9 @@ class Meigui
 		$soilnos = $meigui->getNeedSowSoilno();
 	    foreach($soilnos as $soilno) {
 		    $soil = R::load('soil', $soilno);
-			$flowerid = SOIL_FLOWER;
+			$flowerid = $user->soil_flower;
 			if($soil->type == 1) {
-			    $flowerid = WATER_FLOWER;
+			    $flowerid = $user->water_flower;
 			}
 			$flower = R::load('flower', $flowerid);
 			$meigui->buyFlower($flower->buyid);
